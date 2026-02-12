@@ -1,6 +1,6 @@
 # TL;DR
 
-Codexics is an experimental theory for a growth system that stores data adaptively; By writing raw data as compositional representations of its collectively redundant components, controlled approximations of the original data can be reconstructed accordingly.
+Codexics is an experimental theory for a growth system that stores data adaptively; By storing data entries as formulaic representations of their collectively pseudo-redundant components, controlled approximations of the original data can be reconstructed accordingly.
 
 # Components
 
@@ -8,49 +8,51 @@ A codexical system has 3 essential components, known as the trio: the codex, the
 
 ### Codex
 
-*The codex is the storage of a codexical system.*
+Core (executable) functions:
+- Wrapping of at least two datasets:
+  - The **codexicon** (the lexicon of codex): A dataset of fragments, which are equilibrized bases for approximated reconstructions
+    - A **fragment** is an optimally picked pseudo-redundant segment of 
+  - The **codexus** (the corpus of codex): A dataset of recipes and metadata, which are entries stored as representations of fragments
+    - A **recipe** is an approximation formula for approximated reconstruction of the original entry using fragments.
+    - The metadata includes the selective extraction of that from the original entry's, as well as house-keeping data including the corrective tensor
+      - The **corrective tensor** is an encoded tendency metric that describes deviation from the original entry.
+- Handling interface queries:
+  - Probing and counting (basic questions about the data)
+  - Restricted queries (as permitted by the configuration)
+    - Codexus reads and writes (usually calling codec)
+    - Codexicon reads and writes (usually calling coder)
+  - Intermediary queries (if compatible codec / coder found)
+    - Manual requests for reoptimization
 
-More than one codex may be needed:
-- For identified sets of internally semi-redundant entries justifying segregation
-- If reoptimization is designed to be triggered by merging instead of correction
-- If more than one data types have misaligned indices or orders
-
-Its core contains:
-- The **codexicon** (the lexicon of codex): A dataset of **fragments**, which are equilibrized bases for approximated reconstructions.
-- The **codexus** (the corpus of codex): A dataset of **recipes**, which are entries stored as representations of fragments.
-  - An **approximation formula** is an encoded instruction to reconstruct the original entry using fragments.
-  - A **corrective tensor** is an encoded tendency metric that describes deviation from the original entry.
-
-Its configuration defines:
+Configuration definitions:
 - The structure of the codexicon and the codexus
 - The building of the data type being stored
 - Any extensions and how to execute them
 
+Multiplicities:
+- Within one codex:
+  - More than one codexicon for distinct sets of fragments justifying segregation
+  - Never more than one codexus, just have more than one codex if needed
+- Stacked codices:
+  - If reoptimization is designed to be triggered by merging instead of correction
+  - If more than one data types that cannot be stored together exists within entries
+
 ### Codec
 
-*The codec is the interface of a codexical system.*
+Core (executable) functions:
+- Encode entries to recipes and output metadata
+  - Deconstructing input format into recipes of existing fragments
+    - Fragmentation of input data entry
+    - Estimated search for useable fragments
+    - Determining the best recipe formula
+  - Recording and calculating deviations accumulated from the original
+    - Determining if new fragments not needed
+    - If deviation exceeds thresholds, call coder
+  - Extraction and safe storage of selected original metadata
+- Decode entries from recipes with metadata
+  - Reconstructing output format according to recipes of fragments
 
-Here it stands for commit + decode, as it is unable to encode and append to the codexicon.
-
-More than one codec:
-- For more than one input or output formats
-
-Its core functions are:
-- (Re)representing entries as recipes
-  - (Re)approximating entries as formulas
-  - (Re)computing corrective tensors 
-- Appending to the codexus when allowed
-- Query handling and execution
-- Bidirectional conversion
-  - Representating entries by approximation
-    - Decoding and decompressing from input format
-  - Reconstructing from approximation formulas
-    - Encoding and compressing into output format
-    - Aligning multi-codex entries if necessary
-
-Its configuration should define:
-- Queries and responses
-- Conversion instructions
+Configuration definitions:
 - The method and syntax of
   - The approximation formulas
     - The compositions (placements, blending)
@@ -59,19 +61,21 @@ Its configuration should define:
 - The policy for appending to the codexus
 - Any extensions and how to execute them
 
+Multiplicities:
+- Stacked codecs:
+  - For more than one input or output formats
+- Nested codecs (external recommended):
+  - If the output format is commands for other codecs
+
 ### Coder
 
-*The coder is the controller of a codexical system.*
-
-Despite traditionally being part of a codec, a codexical coder does as much heavy lifting as the rest of the codec, and is therefore separated.
-
-Its core functions are:
+Core (executable) functions:
 - Determining if new fragments are needed
 - Equilibrizing and approving fragments
 - Appending to the codexicon if needed 
 - Auditing to decide if reapproximations are needed
 
-Its configuration defines:
+Configuration definitions:
 - The acceptable thresholds of corrective tensors
 - The policy for appending to the codexicon
 - The invocation of auditing and reoptimization
